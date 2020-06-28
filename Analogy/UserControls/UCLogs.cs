@@ -34,7 +34,7 @@ namespace Analogy
         public bool DoNotAddToRecentHistory { get; set; } = false;
         private PagingManager PagingManager { get; set; }
         private FileProcessor fileProcessor { get; set; }
-
+        ManualResetEvent columnAdderSync = new ManualResetEvent(false);
         public CancellationTokenSource CancellationTokenSource { get; set; } = new CancellationTokenSource();
         public event EventHandler<bool> FullMode;
         public event EventHandler<AnalogyClearedHistoryEventArgs> OnHistoryCleared;
@@ -45,6 +45,7 @@ namespace Analogy
         public int fileLoadingCount;
         private bool FullModeEnabled { get; set; }
         private bool LoadingInProgress => fileLoadingCount > 0;
+        private List<string> currentColumns;
         private UserSettingsManager Settings => UserSettingsManager.UserSettings;
         private IExtensionsManager ExtensionManager { get; set; } = ExtensionsManager.Instance;
         private IEnumerable<IAnalogyExtension> InPlaceRegisteredExtensions { get; set; }
@@ -125,6 +126,7 @@ namespace Analogy
             PagingManager = new PagingManager(this);
             lockSlim = PagingManager.lockSlim;
             _messageData = PagingManager.CurrentPage();
+            currentColumns = logGrid.Columns.Select(c => c.FieldName).ToList();
             SetupEventsHandlers();
         }
 
@@ -998,7 +1000,29 @@ namespace Analogy
             {
                 dtr["TimeDiff"] = message.Date.Subtract(diffStartTime).ToString();
             }
+            lockSlim.ExitWriteLock();
+            if (message.AdditionalInformation != null)
+            {
+                foreach (KeyValuePair<string, string> info in message.AdditionalInformation)
+                {
+                    if (!currentColumns.Contains(info.Key))
+                    {
+                        BeginInvoke(new MethodInvoker(() =>
+                            {
+                                if (!logGrid.Columns.Select(g => g.FieldName).Contains(info.Key))
+                                    logGrid.Columns.Add(new GridColumn() { Caption = info.Key, FieldName = info.Key, Name = info.Key, Visible = true });
+                                currentColumns.Add(info.Key);
+                                columnAdderSync.Set();
 
+                            }));
+                        columnAdderSync.WaitOne();
+                        columnAdderSync.Reset();
+                    }
+
+                }
+
+            }
+            lockSlim.EnterWriteLock();
             if (hasAnyInPlaceExtensions)
             {
                 foreach (IAnalogyExtension extension in InPlaceRegisteredExtensions)
@@ -1081,7 +1105,7 @@ namespace Analogy
 
                 BeginInvoke(new MethodInvoker(() =>
                 {
-                    lockSlim.EnterWriteLock();
+                    //lockSlim.EnterWriteLock();
                     try
                     {
                         LogGrid.BeginDataUpdate();
@@ -1091,7 +1115,7 @@ namespace Analogy
                     }
                     finally
                     {
-                        lockSlim.ExitWriteLock();
+                       // lockSlim.ExitWriteLock();
                     }
 
                 }));
@@ -1407,8 +1431,8 @@ namespace Analogy
             int[] selRows = LogGrid.GetSelectedRows();
             if (message == null) return;
             lockSlim.EnterWriteLock();
-            string dataSource = (string) LogGrid.GetRowCellValue(selRows.First(), "DataProvider") ?? string.Empty;
-            DataRow dtr = Utils.CreateRow(_bookmarkedMessages, message,dataSource);
+            string dataSource = (string)LogGrid.GetRowCellValue(selRows.First(), "DataProvider") ?? string.Empty;
+            DataRow dtr = Utils.CreateRow(_bookmarkedMessages, message, dataSource,this);
             if (diffStartTime > DateTime.MinValue)
             {
                 dtr["TimeDiff"] = message.Date.Subtract(diffStartTime).ToString();
@@ -1869,7 +1893,7 @@ namespace Analogy
             foreach (var message in messages)
             {
 
-                DataRow dtr = Utils.CreateRow(grouped, message, "");
+                DataRow dtr = Utils.CreateRow(grouped, message, "",this);
                 if (diffStartTime > DateTime.MinValue)
                 {
                     dtr["TimeDiff"] = message.Date.Subtract(diffStartTime).ToString();
@@ -2194,7 +2218,7 @@ namespace Analogy
         {
             txtbSource.Text = "";
         }
-        
+
         private void sbtnIncludeModules_Click(object sender, EventArgs e)
         {
             txtbModule.Text = "";

@@ -98,7 +98,7 @@ namespace Analogy
             try
             {
                 lockSlim.EnterWriteLock();
-                DataRow dtr = Utils.CreateRow(table, message,dataSource);
+                DataRow dtr = Utils.CreateRow(table, message,dataSource,owner);
                 table.Rows.Add(dtr);
                 return dtr;
 
@@ -132,7 +132,7 @@ namespace Analogy
                     }
 
                     countInsideTable++;
-                    DataRow dtr = Utils.CreateRow(table, message, dataSource);
+                    DataRow dtr = Utils.CreateRow(table, message, dataSource,owner);
                     table.Rows.Add(dtr);
                     rows.Add((dtr, message));
                 }
