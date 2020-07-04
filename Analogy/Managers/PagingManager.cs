@@ -11,7 +11,7 @@ namespace Analogy
 {
     public class PagingManager
     {
-        //public List<string> CurrentColumns { get; set; }
+        //public List<string> CurrentColumnsFields { get; set; }
         private static ManualResetEvent columnAdderSync = new ManualResetEvent(false);
         public ReaderWriterLockSlim columnsLockSlim = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
         private readonly UCLogs owner;
@@ -44,7 +44,7 @@ namespace Analogy
 
         public PagingManager(UCLogs owner)
         {
-            //CurrentColumns = new List<string>();
+            //CurrentColumnsFields = new List<string>();
             this.owner = owner;
             pageSize = Settings.PagingEnabled ? Settings.PagingSize : int.MaxValue;
             pages = new List<DataTable>();
@@ -52,7 +52,7 @@ namespace Analogy
             currentTable = Utils.DataTableConstructor();
             //foreach (DataColumn column in currentTable.Columns)
             //{
-            //    CurrentColumns.Add(column.ColumnName);
+            //    CurrentColumnsFields.Add(column.ColumnName);
             //}
             pages.Add(currentTable);
             currentPageNumber = 1;

@@ -35,7 +35,7 @@ namespace Analogy
         private PagingManager PagingManager { get; set; }
         private FileProcessor fileProcessor { get; set; }
         ManualResetEvent columnAdderSync = new ManualResetEvent(false);
-        public List<string> CurrentColumns { get; set; }
+        public List<(string field, string caption)> CurrentColumnsFields { get; set; }
         public CancellationTokenSource CancellationTokenSource { get; set; } = new CancellationTokenSource();
         public event EventHandler<bool> FullMode;
         public event EventHandler<AnalogyClearedHistoryEventArgs> OnHistoryCleared;
@@ -128,9 +128,9 @@ namespace Analogy
             PagingManager = new PagingManager(this);
             lockSlim = PagingManager.lockSlim;
             _messageData = PagingManager.CurrentPage();
-            CurrentColumns = logGrid.Columns.Select(c => c.FieldName).ToList();
-            IncludeFilterCriteriaUIOptions = CurrentColumns.Select(c => new FilterCriteriaUIOption(c, c, true)).ToList();
-            ExcludeFilterCriteriaUIOptions = CurrentColumns.Select(c => new FilterCriteriaUIOption(c, c, true)).ToList();
+            CurrentColumnsFields = logGrid.Columns.Select(c => (c.FieldName, c.Caption)).ToList();
+            IncludeFilterCriteriaUIOptions = CurrentColumnsFields.Select(c => new FilterCriteriaUIOption(c.caption, c.field, true)).ToList();
+            ExcludeFilterCriteriaUIOptions = CurrentColumnsFields.Select(c => new FilterCriteriaUIOption(c.caption, c.field, true)).ToList();
             clbInclude.DisplayMember = nameof(FilterCriteriaUIOption.DisplayMember);
             clbInclude.ValueMember = nameof(FilterCriteriaUIOption.ValueMember);
             clbInclude.CheckMember = nameof(FilterCriteriaUIOption.CheckMember);
@@ -1050,7 +1050,7 @@ namespace Analogy
             if (message.AdditionalInformation != null && message.AdditionalInformation.Any() && Settings.CheckAdditionalInformation)
                 foreach (KeyValuePair<string, string> info in message.AdditionalInformation)
                 {
-                    if (!CurrentColumns.Contains(info.Key))
+                    if (!CurrentColumnsFields.Exists(c => c.field == info.Key))
                     {
                         if (this.InvokeRequired)
                         {
@@ -1059,8 +1059,8 @@ namespace Analogy
                                 if (!gridView.Columns.Select(g => g.FieldName).Contains(info.Key))
                                 {
                                     gridView.Columns.Add(new GridColumn()
-                                        {Caption = info.Key, FieldName = info.Key, Name = info.Key, Visible = true});
-                                    CurrentColumns.Add(info.Key);
+                                    { Caption = info.Key, FieldName = info.Key, Name = info.Key, Visible = true });
+                                    CurrentColumnsFields.Add((info.Key, info.Key));
                                     IncludeFilterCriteriaUIOptions.Add(
                                         new FilterCriteriaUIOption(info.Key, info.Key, false));
                                     ExcludeFilterCriteriaUIOptions.Add(new FilterCriteriaUIOption(info.Key, info.Key, false));
@@ -1077,8 +1077,8 @@ namespace Analogy
                             if (!gridView.Columns.Select(g => g.FieldName).Contains(info.Key))
                             {
                                 gridView.Columns.Add(new GridColumn()
-                                    {Caption = info.Key, FieldName = info.Key, Name = info.Key, Visible = true});
-                                CurrentColumns.Add(info.Key);
+                                { Caption = info.Key, FieldName = info.Key, Name = info.Key, Visible = true });
+                                CurrentColumnsFields.Add((info.Key, info.Key));
                                 IncludeFilterCriteriaUIOptions.Add(new FilterCriteriaUIOption(info.Key, info.Key, false));
                                 ExcludeFilterCriteriaUIOptions.Add(new FilterCriteriaUIOption(info.Key, info.Key, false));
 
