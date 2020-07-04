@@ -44,6 +44,8 @@ namespace Analogy
         private string OldTextInclude = string.Empty;
         private string OldTextExclude = string.Empty;
         public int fileLoadingCount;
+        public List<FilterCriteriaUIOption> IncludeFilterCriteriaUIOptions { get; set; }
+        public List<FilterCriteriaUIOption> ExcludeFilterCriteriaUIOptions { get; set; }
         private bool FullModeEnabled { get; set; }
         private bool LoadingInProgress => fileLoadingCount > 0;
         private UserSettingsManager Settings => UserSettingsManager.UserSettings;
@@ -127,6 +129,17 @@ namespace Analogy
             lockSlim = PagingManager.lockSlim;
             _messageData = PagingManager.CurrentPage();
             CurrentColumns = logGrid.Columns.Select(c => c.FieldName).ToList();
+            IncludeFilterCriteriaUIOptions = CurrentColumns.Select(c => new FilterCriteriaUIOption(c, c, true)).ToList();
+            ExcludeFilterCriteriaUIOptions = CurrentColumns.Select(c => new FilterCriteriaUIOption(c, c, true)).ToList();
+            clbInclude.DisplayMember = nameof(FilterCriteriaUIOption.DisplayMember);
+            clbInclude.ValueMember = nameof(FilterCriteriaUIOption.ValueMember);
+            clbInclude.CheckMember = nameof(FilterCriteriaUIOption.CheckMember);
+            clbInclude.DataSource = IncludeFilterCriteriaUIOptions;
+            clbExclude.DisplayMember = nameof(FilterCriteriaUIOption.DisplayMember);
+            clbExclude.ValueMember = nameof(FilterCriteriaUIOption.ValueMember);
+            clbExclude.CheckMember = nameof(FilterCriteriaUIOption.CheckMember);
+            clbExclude.DataSource = IncludeFilterCriteriaUIOptions;
+
             SetupEventsHandlers();
         }
 
@@ -1044,9 +1057,16 @@ namespace Analogy
                             BeginInvoke(new MethodInvoker(() =>
                             {
                                 if (!gridView.Columns.Select(g => g.FieldName).Contains(info.Key))
+                                {
                                     gridView.Columns.Add(new GridColumn()
                                         {Caption = info.Key, FieldName = info.Key, Name = info.Key, Visible = true});
-                                CurrentColumns.Add(info.Key);
+                                    CurrentColumns.Add(info.Key);
+                                    IncludeFilterCriteriaUIOptions.Add(
+                                        new FilterCriteriaUIOption(info.Key, info.Key, false));
+                                    ExcludeFilterCriteriaUIOptions.Add(new FilterCriteriaUIOption(info.Key, info.Key, false));
+
+                                }
+
                                 columnAdderSync.Set();
                             }));
                             columnAdderSync.WaitOne();
@@ -1055,9 +1075,14 @@ namespace Analogy
                         else
                         {
                             if (!gridView.Columns.Select(g => g.FieldName).Contains(info.Key))
+                            {
                                 gridView.Columns.Add(new GridColumn()
                                     {Caption = info.Key, FieldName = info.Key, Name = info.Key, Visible = true});
-                            CurrentColumns.Add(info.Key);
+                                CurrentColumns.Add(info.Key);
+                                IncludeFilterCriteriaUIOptions.Add(new FilterCriteriaUIOption(info.Key, info.Key, false));
+                                ExcludeFilterCriteriaUIOptions.Add(new FilterCriteriaUIOption(info.Key, info.Key, false));
+
+                            }
                         }
 
                     }
@@ -1922,14 +1947,14 @@ namespace Analogy
         {
             dataProvider = string.Empty;
             var selectedRowHandles = logGrid.GetSelectedRows();
-            List<AnalogyLogMessage> messages=new List<AnalogyLogMessage>();
+            List<AnalogyLogMessage> messages = new List<AnalogyLogMessage>();
             for (int i = 0; i < selectedRowHandles.Length; i++)
             {
 
                 if (selectedRowHandles[i] >= 0)
                 {
-                    dataProvider = (string) LogGrid.GetRowCellValue(selectedRowHandles[i], "DataProvider");
-                    AnalogyLogMessage message = (AnalogyLogMessage)LogGrid.GetRowCellValue(selectedRowHandles[i],"Object");
+                    dataProvider = (string)LogGrid.GetRowCellValue(selectedRowHandles[i], "DataProvider");
+                    AnalogyLogMessage message = (AnalogyLogMessage)LogGrid.GetRowCellValue(selectedRowHandles[i], "Object");
                     messages.Add(message);
                 }
             }
@@ -1967,7 +1992,7 @@ namespace Analogy
             foreach (var message in messages)
             {
                 AddExtraColumnsIfNeededToBookmark(message);
-                DataRow dtr = Utils.CreateRow(grouped, message, "",Settings.CheckAdditionalInformation);
+                DataRow dtr = Utils.CreateRow(grouped, message, "", Settings.CheckAdditionalInformation);
                 if (diffStartTime > DateTime.MinValue)
                 {
                     dtr["TimeDiff"] = message.Date.Subtract(diffStartTime).ToString();
@@ -2401,7 +2426,7 @@ namespace Analogy
         private void bBtnSaveCurrentSelectionCustomFormat_ItemClick(object sender, ItemClickEventArgs e)
         {
 
-          SaveMessagesToLog(FileDataProvider, GetMessagesFromSelectedRowInGrid(out _));
+            SaveMessagesToLog(FileDataProvider, GetMessagesFromSelectedRowInGrid(out _));
         }
 
         private void bBtnSaveCurrentSelectionAnalogyFormat_ItemClick(object sender, ItemClickEventArgs e)

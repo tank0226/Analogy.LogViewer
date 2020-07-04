@@ -146,6 +146,17 @@ namespace Analogy
             this.chkbHighlight = new System.Windows.Forms.CheckBox();
             this.pnlTopFiltering = new System.Windows.Forms.Panel();
             this.spltFilteringBoth = new System.Windows.Forms.SplitContainer();
+            this.panelControl2 = new DevExpress.XtraEditors.PanelControl();
+            this.pnlIncludeFilter = new DevExpress.XtraEditors.PanelControl();
+            this.teInclude = new DevExpress.XtraEditors.TextEdit();
+            this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
+            this.ceInclude = new DevExpress.XtraEditors.CheckEdit();
+            this.tpFilters = new DevExpress.XtraBars.Navigation.TabPane();
+            this.tpIncludeFilter = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.clbInclude = new DevExpress.XtraEditors.CheckedListBoxControl();
+            this.tpExcludeFilter = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.clbExclude = new DevExpress.XtraEditors.CheckedListBoxControl();
             this.pnlFilteringLeft = new System.Windows.Forms.Panel();
             this.spltcDateFiltering = new System.Windows.Forms.SplitContainer();
             this.deOlderThanFilter = new DevExpress.XtraEditors.DateEdit();
@@ -267,6 +278,18 @@ namespace Analogy
             this.spltFilteringBoth.Panel1.SuspendLayout();
             this.spltFilteringBoth.Panel2.SuspendLayout();
             this.spltFilteringBoth.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).BeginInit();
+            this.panelControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pnlIncludeFilter)).BeginInit();
+            this.pnlIncludeFilter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.teInclude.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ceInclude.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tpFilters)).BeginInit();
+            this.tpFilters.SuspendLayout();
+            this.tpIncludeFilter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clbInclude)).BeginInit();
+            this.tpExcludeFilter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clbExclude)).BeginInit();
             this.pnlFilteringLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltcDateFiltering)).BeginInit();
             this.spltcDateFiltering.Panel1.SuspendLayout();
@@ -1605,6 +1628,7 @@ namespace Analogy
             // spltFilteringBoth.Panel1
             // 
             this.spltFilteringBoth.Panel1.Controls.Add(this.pnlFilteringLeft);
+            this.spltFilteringBoth.Panel1.Controls.Add(this.panelControl2);
             // 
             // spltFilteringBoth.Panel2
             // 
@@ -1614,6 +1638,116 @@ namespace Analogy
             this.spltFilteringBoth.SplitterDistance = 1633;
             this.spltFilteringBoth.SplitterWidth = 3;
             this.spltFilteringBoth.TabIndex = 19;
+            // 
+            // panelControl2
+            // 
+            this.panelControl2.Controls.Add(this.pnlIncludeFilter);
+            this.panelControl2.Controls.Add(this.tpFilters);
+            this.panelControl2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelControl2.Location = new System.Drawing.Point(1169, 0);
+            this.panelControl2.Name = "panelControl2";
+            this.panelControl2.Size = new System.Drawing.Size(464, 152);
+            this.panelControl2.TabIndex = 22;
+            // 
+            // pnlIncludeFilter
+            // 
+            this.pnlIncludeFilter.Controls.Add(this.teInclude);
+            this.pnlIncludeFilter.Controls.Add(this.simpleButton2);
+            this.pnlIncludeFilter.Controls.Add(this.simpleButton3);
+            this.pnlIncludeFilter.Controls.Add(this.ceInclude);
+            this.pnlIncludeFilter.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlIncludeFilter.Location = new System.Drawing.Point(2, 2);
+            this.pnlIncludeFilter.Name = "pnlIncludeFilter";
+            this.pnlIncludeFilter.Size = new System.Drawing.Size(304, 26);
+            this.pnlIncludeFilter.TabIndex = 26;
+            // 
+            // teInclude
+            // 
+            this.teInclude.Dock = System.Windows.Forms.DockStyle.Top;
+            this.teInclude.Location = new System.Drawing.Point(78, 2);
+            this.teInclude.MenuManager = this.barManager1;
+            this.teInclude.Name = "teInclude";
+            this.teInclude.Size = new System.Drawing.Size(178, 22);
+            this.teInclude.TabIndex = 24;
+            // 
+            // simpleButton2
+            // 
+            this.simpleButton2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.simpleButton2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton2.ImageOptions.Image")));
+            this.simpleButton2.Location = new System.Drawing.Point(256, 2);
+            this.simpleButton2.Name = "simpleButton2";
+            this.simpleButton2.Size = new System.Drawing.Size(23, 22);
+            this.simpleButton2.TabIndex = 22;
+            this.simpleButton2.ToolTip = "Clear the text";
+            // 
+            // simpleButton3
+            // 
+            this.simpleButton3.Dock = System.Windows.Forms.DockStyle.Right;
+            this.simpleButton3.ImageOptions.Image = global::Analogy.Properties.Resources.SingleMasterFilter_16x16;
+            this.simpleButton3.Location = new System.Drawing.Point(279, 2);
+            this.simpleButton3.Name = "simpleButton3";
+            this.simpleButton3.Size = new System.Drawing.Size(23, 22);
+            this.simpleButton3.TabIndex = 23;
+            this.simpleButton3.ToolTip = "Pre-defined filters";
+            // 
+            // ceInclude
+            // 
+            this.ceInclude.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ceInclude.Location = new System.Drawing.Point(2, 2);
+            this.ceInclude.MenuManager = this.barManager1;
+            this.ceInclude.Name = "ceInclude";
+            this.ceInclude.Properties.Caption = "Include:";
+            this.ceInclude.Size = new System.Drawing.Size(76, 22);
+            this.ceInclude.TabIndex = 23;
+            this.ceInclude.ToolTip = "Use & or + for AND operations. Use | for OR operations";
+            // 
+            // tpFilters
+            // 
+            this.tpFilters.Controls.Add(this.tpIncludeFilter);
+            this.tpFilters.Controls.Add(this.tpExcludeFilter);
+            this.tpFilters.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tpFilters.Location = new System.Drawing.Point(306, 2);
+            this.tpFilters.Name = "tpFilters";
+            this.tpFilters.Pages.AddRange(new DevExpress.XtraBars.Navigation.NavigationPageBase[] {
+            this.tpIncludeFilter,
+            this.tpExcludeFilter});
+            this.tpFilters.RegularSize = new System.Drawing.Size(156, 148);
+            this.tpFilters.SelectedPage = this.tpIncludeFilter;
+            this.tpFilters.Size = new System.Drawing.Size(156, 148);
+            this.tpFilters.TabIndex = 25;
+            this.tpFilters.Text = "tabPane1";
+            // 
+            // tpIncludeFilter
+            // 
+            this.tpIncludeFilter.Caption = "Include";
+            this.tpIncludeFilter.Controls.Add(this.clbInclude);
+            this.tpIncludeFilter.Name = "tpIncludeFilter";
+            this.tpIncludeFilter.Size = new System.Drawing.Size(156, 115);
+            this.tpIncludeFilter.ToolTip = "Fields to include in the include filter";
+            // 
+            // clbInclude
+            // 
+            this.clbInclude.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.clbInclude.Location = new System.Drawing.Point(0, 0);
+            this.clbInclude.Name = "clbInclude";
+            this.clbInclude.Size = new System.Drawing.Size(156, 115);
+            this.clbInclude.TabIndex = 21;
+            // 
+            // tpExcludeFilter
+            // 
+            this.tpExcludeFilter.Caption = "Excludes";
+            this.tpExcludeFilter.Controls.Add(this.clbExclude);
+            this.tpExcludeFilter.Name = "tpExcludeFilter";
+            this.tpExcludeFilter.Size = new System.Drawing.Size(156, 89);
+            this.tpExcludeFilter.ToolTip = "Fields to include in the exclude filter";
+            // 
+            // clbExclude
+            // 
+            this.clbExclude.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.clbExclude.Location = new System.Drawing.Point(0, 0);
+            this.clbExclude.Name = "clbExclude";
+            this.clbExclude.Size = new System.Drawing.Size(156, 89);
+            this.clbExclude.TabIndex = 22;
             // 
             // pnlFilteringLeft
             // 
@@ -1626,7 +1760,7 @@ namespace Analogy
             this.pnlFilteringLeft.Location = new System.Drawing.Point(0, 0);
             this.pnlFilteringLeft.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlFilteringLeft.Name = "pnlFilteringLeft";
-            this.pnlFilteringLeft.Size = new System.Drawing.Size(1633, 152);
+            this.pnlFilteringLeft.Size = new System.Drawing.Size(1169, 152);
             this.pnlFilteringLeft.TabIndex = 20;
             // 
             // spltcDateFiltering
@@ -1645,7 +1779,7 @@ namespace Analogy
             this.spltcDateFiltering.Panel1.Controls.Add(this.chkDateNewerThan);
             this.spltcDateFiltering.Panel1.Controls.Add(this.pictureBox1);
             this.spltcDateFiltering.Panel2Collapsed = true;
-            this.spltcDateFiltering.Size = new System.Drawing.Size(1622, 24);
+            this.spltcDateFiltering.Size = new System.Drawing.Size(1158, 24);
             this.spltcDateFiltering.SplitterDistance = 683;
             this.spltcDateFiltering.TabIndex = 27;
             // 
@@ -1715,7 +1849,7 @@ namespace Analogy
             // 
             this.simpleButton1.Dock = System.Windows.Forms.DockStyle.Right;
             this.simpleButton1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.ImageOptions.Image")));
-            this.simpleButton1.Location = new System.Drawing.Point(1599, 0);
+            this.simpleButton1.Location = new System.Drawing.Point(1135, 0);
             this.simpleButton1.Name = "simpleButton1";
             this.simpleButton1.Size = new System.Drawing.Size(23, 24);
             this.simpleButton1.TabIndex = 24;
@@ -1758,7 +1892,7 @@ namespace Analogy
             this.spltcProcessesModule.Panel1.Controls.Add(this.sbtnUndockPerProcess);
             this.spltcProcessesModule.Panel1.Controls.Add(this.chkbModules);
             this.spltcProcessesModule.Panel2Collapsed = true;
-            this.spltcProcessesModule.Size = new System.Drawing.Size(1622, 24);
+            this.spltcProcessesModule.Size = new System.Drawing.Size(1158, 24);
             this.spltcProcessesModule.SplitterDistance = 574;
             this.spltcProcessesModule.TabIndex = 26;
             // 
@@ -1768,14 +1902,14 @@ namespace Analogy
             this.txtbModule.Location = new System.Drawing.Point(275, 0);
             this.txtbModule.MenuManager = this.barManager1;
             this.txtbModule.Name = "txtbModule";
-            this.txtbModule.Size = new System.Drawing.Size(1143, 22);
+            this.txtbModule.Size = new System.Drawing.Size(679, 22);
             this.txtbModule.TabIndex = 26;
             // 
             // sbtnIncludeModules
             // 
             this.sbtnIncludeModules.Dock = System.Windows.Forms.DockStyle.Right;
             this.sbtnIncludeModules.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("sbtnIncludeModules.ImageOptions.Image")));
-            this.sbtnIncludeModules.Location = new System.Drawing.Point(1418, 0);
+            this.sbtnIncludeModules.Location = new System.Drawing.Point(954, 0);
             this.sbtnIncludeModules.Name = "sbtnIncludeModules";
             this.sbtnIncludeModules.Size = new System.Drawing.Size(23, 24);
             this.sbtnIncludeModules.TabIndex = 24;
@@ -1786,7 +1920,7 @@ namespace Analogy
             // 
             this.sbtnUndockPerProcess.AutoSize = true;
             this.sbtnUndockPerProcess.Dock = System.Windows.Forms.DockStyle.Right;
-            this.sbtnUndockPerProcess.Location = new System.Drawing.Point(1441, 0);
+            this.sbtnUndockPerProcess.Location = new System.Drawing.Point(977, 0);
             this.sbtnUndockPerProcess.Name = "sbtnUndockPerProcess";
             this.sbtnUndockPerProcess.Size = new System.Drawing.Size(181, 24);
             this.sbtnUndockPerProcess.TabIndex = 24;
@@ -1818,7 +1952,7 @@ namespace Analogy
             this.spltcSources.Panel1.Controls.Add(this.chkbSources);
             this.spltcSources.Panel1.Controls.Add(this.pboxInfoExclude);
             this.spltcSources.Panel2Collapsed = true;
-            this.spltcSources.Size = new System.Drawing.Size(1622, 24);
+            this.spltcSources.Size = new System.Drawing.Size(1158, 24);
             this.spltcSources.SplitterDistance = 683;
             this.spltcSources.TabIndex = 25;
             // 
@@ -1828,14 +1962,14 @@ namespace Analogy
             this.txtbSource.Location = new System.Drawing.Point(228, 0);
             this.txtbSource.MenuManager = this.barManager1;
             this.txtbSource.Name = "txtbSource";
-            this.txtbSource.Size = new System.Drawing.Size(1371, 22);
+            this.txtbSource.Size = new System.Drawing.Size(907, 22);
             this.txtbSource.TabIndex = 25;
             // 
             // sbtnIncludeSources
             // 
             this.sbtnIncludeSources.Dock = System.Windows.Forms.DockStyle.Right;
             this.sbtnIncludeSources.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("sbtnIncludeSources.ImageOptions.Image")));
-            this.sbtnIncludeSources.Location = new System.Drawing.Point(1599, 0);
+            this.sbtnIncludeSources.Location = new System.Drawing.Point(1135, 0);
             this.sbtnIncludeSources.Name = "sbtnIncludeSources";
             this.sbtnIncludeSources.Size = new System.Drawing.Size(23, 24);
             this.sbtnIncludeSources.TabIndex = 24;
@@ -1878,8 +2012,8 @@ namespace Analogy
             this.spltTextExclude.Panel1.Controls.Add(this.sBtnMostCommon);
             this.spltTextExclude.Panel1.Controls.Add(this.chkExclude);
             this.spltTextExclude.Panel2Collapsed = true;
-            this.spltTextExclude.Size = new System.Drawing.Size(1622, 24);
-            this.spltTextExclude.SplitterDistance = 998;
+            this.spltTextExclude.Size = new System.Drawing.Size(1158, 24);
+            this.spltTextExclude.SplitterDistance = 777;
             this.spltTextExclude.TabIndex = 24;
             // 
             // txtbExclude
@@ -1888,14 +2022,14 @@ namespace Analogy
             this.txtbExclude.Location = new System.Drawing.Point(127, 0);
             this.txtbExclude.MenuManager = this.barManager1;
             this.txtbExclude.Name = "txtbExclude";
-            this.txtbExclude.Size = new System.Drawing.Size(1352, 22);
+            this.txtbExclude.Size = new System.Drawing.Size(888, 22);
             this.txtbExclude.TabIndex = 20;
             // 
             // sbtnTextExclude
             // 
             this.sbtnTextExclude.Dock = System.Windows.Forms.DockStyle.Right;
             this.sbtnTextExclude.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("sbtnTextExclude.ImageOptions.Image")));
-            this.sbtnTextExclude.Location = new System.Drawing.Point(1479, 0);
+            this.sbtnTextExclude.Location = new System.Drawing.Point(1015, 0);
             this.sbtnTextExclude.Name = "sbtnTextExclude";
             this.sbtnTextExclude.Size = new System.Drawing.Size(23, 24);
             this.sbtnTextExclude.TabIndex = 20;
@@ -1905,7 +2039,7 @@ namespace Analogy
             // sBtnMostCommon
             // 
             this.sBtnMostCommon.Dock = System.Windows.Forms.DockStyle.Right;
-            this.sBtnMostCommon.Location = new System.Drawing.Point(1502, 0);
+            this.sBtnMostCommon.Location = new System.Drawing.Point(1038, 0);
             this.sBtnMostCommon.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.sBtnMostCommon.Name = "sBtnMostCommon";
             this.sBtnMostCommon.Size = new System.Drawing.Size(120, 24);
@@ -1941,8 +2075,8 @@ namespace Analogy
             this.spltText.Panel1.Controls.Add(this.pboxInfo);
             this.spltText.Panel1.Controls.Add(this.sbtnPreDefinedFilters);
             this.spltText.Panel2Collapsed = true;
-            this.spltText.Size = new System.Drawing.Size(1622, 24);
-            this.spltText.SplitterDistance = 998;
+            this.spltText.Size = new System.Drawing.Size(1158, 24);
+            this.spltText.SplitterDistance = 777;
             this.spltText.TabIndex = 22;
             // 
             // txtbInclude
@@ -1951,14 +2085,14 @@ namespace Analogy
             this.txtbInclude.Location = new System.Drawing.Point(127, 0);
             this.txtbInclude.MenuManager = this.barManager1;
             this.txtbInclude.Name = "txtbInclude";
-            this.txtbInclude.Size = new System.Drawing.Size(1449, 22);
+            this.txtbInclude.Size = new System.Drawing.Size(985, 22);
             this.txtbInclude.TabIndex = 19;
             // 
             // sbtnTextInclude
             // 
             this.sbtnTextInclude.Dock = System.Windows.Forms.DockStyle.Right;
             this.sbtnTextInclude.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("sbtnTextInclude.ImageOptions.Image")));
-            this.sbtnTextInclude.Location = new System.Drawing.Point(1576, 0);
+            this.sbtnTextInclude.Location = new System.Drawing.Point(1112, 0);
             this.sbtnTextInclude.Name = "sbtnTextInclude";
             this.sbtnTextInclude.Size = new System.Drawing.Size(23, 24);
             this.sbtnTextInclude.TabIndex = 20;
@@ -1994,7 +2128,7 @@ namespace Analogy
             // 
             this.sbtnPreDefinedFilters.Dock = System.Windows.Forms.DockStyle.Right;
             this.sbtnPreDefinedFilters.ImageOptions.Image = global::Analogy.Properties.Resources.SingleMasterFilter_16x16;
-            this.sbtnPreDefinedFilters.Location = new System.Drawing.Point(1599, 0);
+            this.sbtnPreDefinedFilters.Location = new System.Drawing.Point(1135, 0);
             this.sbtnPreDefinedFilters.Name = "sbtnPreDefinedFilters";
             this.sbtnPreDefinedFilters.Size = new System.Drawing.Size(23, 24);
             this.sbtnPreDefinedFilters.TabIndex = 21;
@@ -3169,6 +3303,18 @@ namespace Analogy
             this.spltFilteringBoth.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.spltFilteringBoth)).EndInit();
             this.spltFilteringBoth.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl2)).EndInit();
+            this.panelControl2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pnlIncludeFilter)).EndInit();
+            this.pnlIncludeFilter.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.teInclude.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ceInclude.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tpFilters)).EndInit();
+            this.tpFilters.ResumeLayout(false);
+            this.tpIncludeFilter.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.clbInclude)).EndInit();
+            this.tpExcludeFilter.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.clbExclude)).EndInit();
             this.pnlFilteringLeft.ResumeLayout(false);
             this.spltcDateFiltering.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.spltcDateFiltering)).EndInit();
@@ -3455,5 +3601,16 @@ namespace Analogy
         private DevExpress.XtraBars.BarButtonItem bBtnSaveCurrentSelectionCustomFormat;
         private DevExpress.XtraBars.BarButtonItem bBtnSaveCurrentSelectionAnalogyFormat;
         private DevExpress.XtraBars.BarButtonItem bBtnUndockSelection;
+        private DevExpress.XtraEditors.CheckEdit ceInclude;
+        private DevExpress.XtraEditors.PanelControl panelControl2;
+        private DevExpress.XtraEditors.CheckedListBoxControl clbInclude;
+        private DevExpress.XtraEditors.PanelControl pnlIncludeFilter;
+        private DevExpress.XtraEditors.TextEdit teInclude;
+        private DevExpress.XtraEditors.SimpleButton simpleButton2;
+        private DevExpress.XtraEditors.SimpleButton simpleButton3;
+        private DevExpress.XtraBars.Navigation.TabPane tpFilters;
+        private DevExpress.XtraBars.Navigation.TabNavigationPage tpIncludeFilter;
+        private DevExpress.XtraBars.Navigation.TabNavigationPage tpExcludeFilter;
+        private DevExpress.XtraEditors.CheckedListBoxControl clbExclude;
     }
 }
